@@ -1,7 +1,9 @@
 title: Today I Learned
-about: fuuuumin/til
+about: Fu-Om/til
 about_url: https://github.com/Fu-Om/til
 plugins:
   datasette-render-markdown:
     columns: ["body"]
     extensions: ["pymdownx.arithmatex"]
+  datasette-block-robots:
+    allow_only_index: true
