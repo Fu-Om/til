@@ -21,8 +21,11 @@
 
 <p>Created: {{ til.created_at }}</p>
 
-{% markdown %}
-{{ til.body }}
+{% markdown
+    extensions="fenced_code codehilite"
+    extra_tags="span div"
+    extra_attrs="span:class div:class" %}
+    {{ til.body }}
 {% endmarkdown %}
 
 {% endblock %}
