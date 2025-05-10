@@ -1,0 +1,19 @@
+[project]
+name = "til"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "datasette",
+  "sqlite-utils",
+  "markdown",
+  "PyYAML>=5.1",
+  "datasette-render-markdown",
+  "pymdown-extensions",
+  "Pygments",
+  "ruff>=0.3.0",
+  "python-slugify>=8.0.4",
+  "python-frontmatter>=1.1.0",
+  "datasette-template-sql>=1.0.2",
+]

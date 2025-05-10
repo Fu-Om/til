@@ -1,0 +1,129 @@
+:root {
+    --bg-color: #1a1a1a; /* Dark background */
+    --text-color: #e0e0e0; /* Light text */
+    --link-color: #64b5f6; /* Lighter blue link */
+    --link-hover-color: #90caf9;
+    --heading-color: #ffffff; /* White headings */
+    --border-color: #444; /* Darker border */
+    --code-bg-color: #2a2a2a; /* Slightly lighter dark for code */
+    --code-text-color: #f0f0f0;
+    --blockquote-bg: #252525;
+    --blockquote-border: #555;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+  }
+  
+  a {
+    color: var(--link-color);
+  }
+  
+  a:hover, a:focus {
+    color: var(--link-hover-color);
+  }
+  
+  hr {
+    border-top: 1px solid var(--border-color);
+    /* Or use background-color for a line */
+    /* background-color: var(--border-color); height: 1px; border: 0; */
+  }
+  
+  /* Make Bootstrap components dark-theme friendly */
+  .container {
+      /* Optional: override default container styles if needed */
+  }
+  
+  header, footer {
+      border-bottom: 1px solid var(--border-color); /* Example */
+  }
+  footer.text-muted {
+      color: #888 !important; /* Override Bootstrap muted color */
+  }
+  
+  
+  /* Code blocks */
+  pre {
+    background-color: var(--code-bg-color);
+    color: var(--code-text-color);
+    border: 1px solid var(--border-color);
+    padding: 1em;
+    overflow-x: auto;
+    border-radius: 4px;
+  }
+  
+  code {
+    background-color: var(--code-bg-color);
+    color: var(--code-text-color);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    /* Ensure inline code doesn't clash badly */
+    font-size: 0.9em;
+  }
+  
+  pre code {
+    background-color: transparent; /* Code inside pre shouldn't have its own bg */
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit; /* Inherit size from pre */
+  }
+  
+  /* Pygments syntax highlighting adjustments (might need tweaking based on theme) */
+  .highlight .c1, .highlight .cm { color: #999; } /* Comments */
+  .highlight .k, .highlight .kc { color: #cc99cd; } /* Keywords */
+  .highlight .nf, .highlight .nc { color: #f08d49; } /* Function/Class names */
+  .highlight .s1, .highlight .s2 { color: #7ec699; } /* Strings */
+  .highlight .mi, .highlight .mf { color: #6897bb; } /* Numbers */
+  
+  
+  /* Blockquotes */
+  blockquote {
+    background-color: var(--blockquote-bg);
+    border-left: 5px solid var(--blockquote-border);
+    padding: 0.5em 1em;
+    margin: 1em 0;
+    color: #ccc; /* Slightly dimmer text in blockquote */
+  }
+  
+  blockquote p {
+    margin-bottom: 0; /* Remove extra space often added inside blockquotes */
+  }
+  
+  /* Admonition styles (if using datasette-render-markdown with admonition) */
+  .admonition {
+      border: 1px solid var(--border-color);
+      border-left-width: 6px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.25rem;
+      background-color: var(--code-bg-color);
+  }
+  .admonition-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: var(--heading-color);
+  }
+  .admonition.note { border-left-color: #64b5f6; }
+  .admonition.warning { border-left-color: #ffb74d; }
+  .admonition.tip { border-left-color: #81c784; }
+  .admonition.danger { border-left-color: #e57373; }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Arrange links horizontally */
+    gap: 20px; /* Space between links */
+  }
+  
+  nav a {
+    text-decoration: none; /* Remove underline from links */
+    padding: 5px 0; /* Add some padding for clickable area */
+    display: block; /* Make the link fill the list item if flex is not on li */
+  }
+  
