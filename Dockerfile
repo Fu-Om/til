@@ -37,5 +37,4 @@ ENTRYPOINT []
 EXPOSE 8001
 
 # Run datasette
-#CMD [ "datasette", "-p", "8001", "-h", "0.0.0.0"]
 CMD ["datasette", "serve", "-p", "8001", "-h", "0.0.0.0", "tils.db", "--metadata", "metadata.yaml", "--template-dir=templates/", "--static", "assets:static-files/"]
