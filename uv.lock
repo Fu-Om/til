@@ -132,6 +132,18 @@ wheels = [
 ]
 
 [[package]]
+name = "datasette-block-robots"
+version = "1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "datasette" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/00/9b/983c94277d304381ee875500e8146e3d3c1456e01cd584c81e3bbcccf1c7/datasette-block-robots-1.1.tar.gz", hash = "sha256:e679fc43c5694194a6e393902bc9e06d611563f4947a8ad7ac3127877f0a9f74", size = 4122 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7d/99/189fc74fc96a2c223fbc384962df0d68ca8b260457bf23e63402b82eb8aa/datasette_block_robots-1.1-py3-none-any.whl", hash = "sha256:ea1e4046fd1aab1db13db09ea89dba95714aabf034f464cff92f2b6f0a123ef8", size = 4375 },
+]
+
+[[package]]
 name = "datasette-render-markdown"
 version = "2.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -525,6 +537,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "datasette" },
+    { name = "datasette-block-robots" },
     { name = "datasette-render-markdown" },
     { name = "datasette-template-sql" },
     { name = "markdown" },
@@ -540,6 +553,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "datasette" },
+    { name = "datasette-block-robots", specifier = ">=1.1" },
     { name = "datasette-render-markdown" },
     { name = "datasette-template-sql", specifier = ">=1.0.2" },
     { name = "markdown" },
