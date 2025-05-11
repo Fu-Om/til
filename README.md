@@ -9,7 +9,7 @@
 
 - Posts are stored in markdown files in the `posts` directory.
 - Markdown support including math rendering.
-- Syntax highlighting.
+- Fenced code blocks.
 
 # Todo Features
 
