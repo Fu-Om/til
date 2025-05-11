@@ -4,12 +4,64 @@ import frontmatter
 from slugify import slugify
 from datetime import datetime, date
 from pathlib import Path
+import pykakasi
+import re
 
 # Configuration
 DB_PATH = "tils.db"
 TABLE_NAME = "tils"
 TIL_DIRECTORY = Path.cwd() / "posts" # Directory where your markdown files are located
 DATE_FORMAT = "%Y-%m-%d"
+
+def contains_japanese(text):
+    """
+    Checks if a string contains Japanese characters (Hiragana, Katakana, or CJK Kanji).
+    """
+    if not text:
+        return False
+    # Regex for Hiragana, Katakana, and common CJK Unified Ideographs range
+    # Hiragana: \u3040-\u309F
+    # Katakana: \u30A0-\u30FF
+    # Kanji (common): \u4E00-\u9FFF
+    # You can extend Kanji ranges if needed, e.g., CJK Extension A: \u3400-\u4DBF
+    return bool(re.search(r'[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]', text))
+
+def slugify_title(title, separator='-'):
+    """
+    Slugifies a title. If it contains Japanese, it transliterates to Romaji first.
+    Otherwise, it slugifies directly.
+
+    Args:
+        title (str): The title string (can be Japanese, English, or mixed).
+        separator (str): The separator to use in the slug (default is '-').
+
+    Returns:
+        str: The slug.
+    """
+    if not title:
+        return ""
+
+    if contains_japanese(title):
+        # Initialize pykakasi with the modern API
+        kks = pykakasi.Kakasi()
+        # Convert the Japanese (or mixed) title
+        # The result is a list of dictionaries, each representing a "word" or segment
+        result = kks.convert(title)
+
+        # Concatenate the Romaji parts.
+        # The Hepburn filter usually segments words appropriately.
+        # We join them with spaces, which slugify will then handle.
+        romaji_parts = [item['hepburn'] for item in result]
+        romaji_text = " ".join(romaji_parts)
+
+        # Now, slugify the (potentially mixed, now fully Romaji/English) text
+        processed_slug = slugify(romaji_text, separator=separator, lowercase=True)
+
+    else:
+        # Title is likely English or another script slugify handles directly
+        processed_slug = slugify(title, separator=separator, lowercase=True)
+
+    return processed_slug
 
 def process_markdown_file(filepath):
     """
@@ -29,7 +81,7 @@ def process_markdown_file(filepath):
             logging.info(f"Skipping: Missing 'title' in header for {filepath}")
             return None
         # 2. Slug (generated from title)
-        slug = slugify(title)
+        slug = slugify_title(title)
         # 3. Created_at (required, validated format)
         raw_created_at = metadata.get('date')
         if isinstance(raw_created_at, (date, datetime)):
@@ -43,9 +95,9 @@ def process_markdown_file(filepath):
                 # .date() ensures we get a date object even if it was datetime
                 date_obj_to_store = datetime.strptime(created_at_str_representation, DATE_FORMAT).date()
             except (ValueError, TypeError):
-                 # ValueError for incorrect format, TypeError if str() failed etc.
-                 logging.info(f"  Skipping: Invalid 'created_at' value or format '{raw_created_at}' (expected {DATE_FORMAT}) for {filepath}")
-                 return None
+                # ValueError for incorrect format, TypeError if str() failed etc.
+                logging.info(f"  Skipping: Invalid 'created_at' value or format '{raw_created_at}' (expected {DATE_FORMAT}) for {filepath}")
+                return None
         return {
             "title": title,
             "slug": slug,
