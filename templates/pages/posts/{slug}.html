@@ -22,16 +22,8 @@
 <p>Created: {{ til.created_at }}</p>
 
 {{ render_markdown(til.body,
-                extensions=["fenced_code", "codehilite"],
-                extra_tags=["span", "div"],
-                extra_attrs={"span": ["class"], "div": ["class"]}) }}
-
-{% markdown
-    extensions="fenced_code codehilite"
-    extra_tags="span div"
-    extra_attrs="span:class div:class" %}
-{% endmarkdown %}
-{% markdown %}
-{% endmarkdown %}
+                extensions=["fenced_code", "codehilite", "tables"],
+                extra_tags=["span", "div", "table", "thead", "tr", "th", "td", "tbody"],
+                extra_attrs={"span": ["class"], "div": ["class"], "p": ["id", "class"], "a": ["name", "href"]}) }}
 
 {% endblock %}
