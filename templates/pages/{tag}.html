@@ -1,0 +1,35 @@
+{% extends "til_base.html" %}
+
+{% set tils = sql("""
+SELECT
+    tags.tag_id AS tag_id,
+    tags.name AS name,
+    til_tags.til_id AS til_id,
+    tils.slug AS slug,
+    tils.title AS title,
+    tils.created_at AS created_at
+FROM
+    tags
+LEFT JOIN
+    til_tags ON tags.tag_id = til_tags.tag_id
+LEFT JOIN
+    tils ON til_tags.til_id = tils.id
+WHERE
+    tags.name = :tag
+ORDER BY
+    tils.created_at DESC;
+""", {"tag": tag}, database="tils")%}
+
+{% if not tils %}
+    {% set raised = raise_404("tag not found") %}
+{% endif %}
+
+{% block body %}
+
+<h2>Posts tagged with "{{ tils[0].name }}"</h2>
+
+{% for til in tils %}
+    <h3><a href="/posts/{{ til.slug }}">{{ til.title }} - {{ til.created_at }}</a></h3>
+{% endfor %}
+
+{% endblock %}
