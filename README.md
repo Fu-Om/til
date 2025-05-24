@@ -13,7 +13,7 @@
 
 # Todo Features
 
-- [ ] Add tags
+- [x] Add tags
 - [ ] Add rss feed
 - [ ] Add search functionality
 - [ ] Improve design
