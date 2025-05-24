@@ -14,6 +14,23 @@ Currently, {{ til_count }} TILs.
 
 <h2><a href="/posts">All Posts</a></h2>
 
+<h2><a href="">All Tags</a></h2>
+{% for tag_info in sql("""SELECT
+    t.tag_id AS tag_id,
+    t.name AS name,
+    COUNT(tt.til_id) AS post_count
+FROM
+    tags t
+LEFT JOIN
+    til_tags tt ON t.tag_id = tt.tag_id
+GROUP BY
+    t.tag_id, t.name
+ORDER BY
+    t.name;
+", database="tils""") %}
+    <a href="">{{ tag_info.name }} ({{ tag_info.post_count }})</a>
+{% endfor %}
+
 <h2>Recent 10 TILs</a></h2>
 {% for til in sql("select * from tils order by created_at desc limit 10", database="tils") %}
     <h3><a href="/posts/{{ til.slug }}">{{ til.title }} - {{ til.created_at }}</a></h3>
